@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Css/sticky-footer.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Sahibimden", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item"><a href="/Admin/Login/Logout" class="nav navbar-nav navbar-right">Çıkış Yap</a></li>
+                </ul>
+                <ul class="nav navbar-nav ">
+                    <li><a href="#">Araba İşlemleri</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-2 ">
+        <ul class="list-group" style="padding-top:2%">
+            <li class="list-group-item ">Araç İşlemleri</li>
+            <li class="list-group-item"> <a href="#markaEkle" data-toggle="modal" class="list-group-item list-group-item-action list-group-item-info">Marka Ekle</a></li>
+            <li class="list-group-item "> <a href="#" class="list-group-item list-group-item-action list-group-item-info">Seri Ekle</a></li>
+            <li class="list-group-item"> <a href="#" class="list-group-item list-group-item-action list-group-item-info">Model Ekle</a></li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-item">Listeler</li>
+            <li class="list-group-item"> <a href="#" class="list-group-item list-group-item-action list-group-item-info" onclick="markaListele()">Marka Listesi</a></li>
+            <li class="list-group-item"> <a href="#" class="list-group-item list-group-item-action list-group-item-info">Seri Listesi</a></li>
+            <li class="list-group-item"> <a href="#" class="list-group-item list-group-item-action list-group-item-info">Model Listesi</a></li>
+        </ul>
+    </div>
+
+
+    <div class="container-fluid body-content">
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div class="cerceve">
+            <span class="text-muted">&copy; @DateTime.Now.Year - My ASP.NET Application</span>
+        </div>
+    </footer>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", false)
+</body>
+</html>

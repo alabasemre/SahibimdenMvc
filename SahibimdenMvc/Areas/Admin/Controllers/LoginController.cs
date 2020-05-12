@@ -13,7 +13,12 @@ namespace SahibimdenMvc.Areas.Admin.Controllers
         // GET: Admin/Login
         public ActionResult Index()
         {
-            return View();
+            if (String.IsNullOrEmpty(HttpContext.User.Identity.Name))
+            {
+                FormsAuthentication.SignOut();
+                return View();
+            }
+            return Redirect("/Admin/Home");
         }
 
         [AllowAnonymous]
