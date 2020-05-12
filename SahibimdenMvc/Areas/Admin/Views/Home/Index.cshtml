@@ -1,0 +1,14 @@
+﻿@using SahibimdenMvc.Models.AdminModels
+@model LoginModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Admin Paneli</h2>
+
+@using (Html.BeginForm("Logout", "Login", FormMethod.Post))
+{
+    <input type="submit" name="btnCikis" value="Çıkış Yap" class="btn btn-success" />
+}
+

@@ -1,0 +1,21 @@
+﻿@using SahibimdenMvc.Models.AdminModels
+@model LoginModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("LoginControl", "Login", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(log => log.EMail)
+        @Html.TextBoxFor(log => log.EMail, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(log => log.Password)
+        @Html.TextBoxFor(log => log.Password, new { @class = "form-control" })
+    </div>
+    <input type="submit" name="btnGiris" value="Giriş Yap" class="btn btn-success" />
+}
