@@ -21,6 +21,7 @@ namespace SahibimdenMvc.Areas.Admin.Controllers
             return View();
         }
 
+        // Marka 
         [SessionControl]
         public JsonResult Markalar() {
             using (ctx = new SahibimdenContext())
@@ -28,19 +29,8 @@ namespace SahibimdenMvc.Areas.Admin.Controllers
                 List<Araba> markaListe = ctx.Arabalar.Where(a => a.UstKategori == 0).ToList();
                 return Json(markaListe, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        //[HttpPost]
-        //public ActionResult Ekle(AdminViewModel a)
-        //{
-        //    using (ctx = new SahibimdenContext())
-        //    {
-        //        ctx.Arabalar.Add(a.Araba);
-        //        ctx.SaveChanges();
-        //    }
-        //    return Redirect("/Admin/Home");
-        //}
-
+        }        
+      
         [SessionControl]
         [HttpPost]
         public bool MarkaEkle(Araba a)
@@ -86,6 +76,85 @@ namespace SahibimdenMvc.Areas.Admin.Controllers
             {
                 ctx.Entry(a).State = EntityState.Modified;
           
+                if (ctx.SaveChanges() > 0)
+                {
+                    basarili = true;
+                }
+            }
+            return basarili;
+        }
+
+        
+        [SessionControl]
+        public JsonResult SerilerVeMarka()
+        {
+            using (ctx = new SahibimdenContext())
+            {
+                List<Araba> markaListe = ctx.Arabalar.Where(a => a.UstKategori == 0).ToList();
+                List<Araba> seriListe = ctx.Arabalar.SqlQuery("SELECT * FROM tblArabalar WHERE UstKategori != 0 OR UstKategori NOT IN(SELECT ArabaId FROM tblArabalar WHERE UstKategori != 0)").ToList();
+                List<Araba> listAll = new List<Araba>();
+                for (int i = 0; i < markaListe.Count; i++)
+                {
+                    listAll.Add(markaListe[i]);
+                    for (int j = 0; j < seriListe.Count; j++)
+                    {
+                        if (markaListe[i].ArabaId == seriListe[j].UstKategori)
+                        {
+                            listAll.Add(seriListe[j]);
+                        }
+                    }
+                }
+
+                return Json(listAll, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        [SessionControl]
+        [HttpPost]
+        public bool SeriEkle(Araba a)
+        {
+            bool basarili = false;
+            using (ctx = new SahibimdenContext())
+            {
+                if (ModelState.IsValid)
+                {
+                    ctx.Arabalar.Add(a);
+                    if (ctx.SaveChanges() > 0)
+                    {
+                        basarili = true;
+                    }
+                }
+            }
+            return basarili;
+        }
+
+        [SessionControl]
+        [HttpPost]
+        public bool SeriSil(int? id)
+        {
+            bool basarili = false;
+            using (ctx = new SahibimdenContext())
+            {
+                Araba a = ctx.Arabalar.Find(id);
+                ctx.Arabalar.Remove(a);
+                if (ctx.SaveChanges() > 0)
+                {
+                    basarili = true;
+                }
+            }
+            return basarili;
+        }
+
+        [SessionControl]
+        [HttpPost]
+        public bool SeriGuncelle(Araba a)
+        {
+            bool basarili = false;
+            using (ctx = new SahibimdenContext())
+            {
+                ctx.Entry(a).State = EntityState.Modified;
+
                 if (ctx.SaveChanges() > 0)
                 {
                     basarili = true;

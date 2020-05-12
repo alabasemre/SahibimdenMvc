@@ -24,13 +24,13 @@
                     @Html.Label("Marka")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "markaEkleAd" })
                     <label id="lblMarkaBos" style="display:none;color:red">Marka Alanı Boş Geçilemez</label>
-                </div>
+                </div>    
                 <input type="submit" name="btnMarkaEkle" value="Ekle" class="btn btn-success" onclick="return markaEkle()" />
             </div>
-            <div class="modal-footer">
+            @*<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -49,89 +49,177 @@
                     @Html.Label("Marka")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "markaDuzenleAd" })
                     <label id="lblMarkaDuzenleBos" style="display:none;color:red">Marka Alanı Boş Geçilemez</label>
-                </div>
+                </div>               
                 <input type="submit" name="btnMarkaDuzenle" value="Düzenle" class="btn btn-success" onclick="return markaDuzenle()" />
             </div>
-            <div class="modal-footer">
+            @*<div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="seriEkle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Seri Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">          
+                    <div class="form-group">
+                        @Html.Label("Marka Seçin")
+                        <br />
+                        <select class="form-control" id="markaseriekle" name="markaseriekle">                           
+                        </select>
+                    </div>                 
+                    <div class="form-group">
+                        @Html.Label("Seri")
+                        @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "seriEkleAd" })
+                        <label id="lblSeriEkleBos" style="display:none;color:red">Seri Alanı Boş Geçilemez</label>
+                    </div>
+                    <input type="submit" name="btnSeriEkle" value="Seri Ekle" class="btn btn-success" onclick="seriEkle()" />        
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="seriDuzenle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Seri Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    @Html.Label("Marka Seçin")
+                    <br />
+                    <select class="form-control" id="markaseriduzenle" name="markaseriduzenle">
+                    </select>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Seri")
+                    @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "seriDuzenleAd" })
+                    <label id="lblSeriDuzenleBos" style="display:none;color:red">Seri Alanı Boş Geçilemez</label>
+                </div>
+                <input type="submit" name="btnSeriDuzenle" value="Seriyi Güncelle" class="btn btn-success" onclick="seriDuzenle()" />
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>*@
         </div>
     </div>
 </div>
 
 
 @section scripts{
+    <script src="~/Scripts/MyScripts/myscripts.js"></script>
     <script>
-        function markaListele() {
+        function seriListele() {
             $.ajax({
-                url: "/Admin/MSM/Markalar",
+                url: "/Admin/MSM/SerilerVeMarka",
                 method: "Get",
                 success: function (data) {
                     $("#icerik").find("table").remove();
                     var txt = "";
                     txt += "<table id='marka' class='table table-striped'>";
-                    txt += "<tr><th> Marka Adı </th>";
+                    txt += "<tr><th> Model Adı </th>";
                     txt += "<th> İşlemler </th></tr>";
                     for (var i = 0; i < data.length; i++) {
                         var id = data[i].ArabaId;
                         var markaAd = data[i].Ad;
-                        txt += "<tr><td>" + markaAd + "</td>";
-                        txt += "<td><a href='#markaDuzenle' data-toggle='modal' class='btn btn-sm btn-primary' onclick=markaDuzenleBilgi(" + id + ",'" + markaAd + "')>Duzenle</a> "
-                        txt += "<a href='#' class='btn btn-sm btn-danger' onclick=markaSil(" + id + ")>Sil</a> </td></tr>"
+                        var ustKategori = data[i].UstKategori;
+                        if (data[i].UstKategori == 0) {
+                            txt += "<tr><th colspan='2' style='font-size:20px'>" + markaAd + "</th></tr>";
+                        } else {
+                            txt += "<tr><td>" + markaAd + "</td>";
+                            txt += "<td><a href='#seriDuzenle' data-toggle='modal' class='btn btn-sm btn-primary' onclick=markaGetirDuzenle(" + id + ",'" + markaAd + "'," + ustKategori + ")>Duzenle</a> "
+                            txt += "<a href='#' class='btn btn-sm btn-danger' onclick=seriSil(" + id + ")>Sil</a> </td></tr>"
+                        }
                     }
                     txt += "</table>"
                     $("#icerik").append(txt);
+
                 }, error: function () {
                     console.log("basarisiz");
                 }
             });
         }
-        function markaEkle() {
+
+        function markaGetir() {
+            $.ajax({
+                url: "/Admin/MSM/Markalar",
+                method: "Get",
+                success: function (data) {
+                    $("#markaseriekle").find("option").remove();
+                    for (var i = 0; i < data.length; i++) {
+                        var id = data[i].ArabaId;
+                        var markaAd = data[i].Ad;
+                        $("#markaseriekle").append("<option value='" + id + "'>" + markaAd + "</option>");
+                    }
+                }, error: function () {
+                    console.log("basarisiz");
+                }
+            });
+        }
+
+        function seriEkle() {
             var hatayok = true;
-            if ($("#markaEkleAd").val().trim() == "") {
-                $("#lblMarkaBos").show();
+            if ($("#seriEkleAd").val().trim() == "") {
+                $("#lblSeriEkleBos").show();
                 hatayok = false;
             } else {
                 $.ajax(
                     {
-                        url: "/Admin/MSM/MarkaEkle",
+                        url: "/Admin/MSM/SeriEkle",
                         method: "Post",
                         data: {
-                            Ad: $("#markaEkleAd").val()
+                            Ad: $("#seriEkleAd").val(),
+                            UstKategori: $("#markaseriekle").val()
                         }, success: function (data) {
                             if (data == "True") {
-                                $("#markaEkleAd").val("");
-                                $("#lblMarkaBos").hide();
-                                alert("Marka Eklendi !!!");
+                                $("#seriEkleAd").val("");
+                                $("#lblSeriEkleBos").hide();
+                                alert("Seri Eklendi !!!");
                             } else {
-                                alert("Marka Eklemede Hata !!!");
+                                alert("Seri Eklemede Hata !!!");
                             }
                         }, error: function (data) {
-                            alert(data);
+                            alert("Bir Hata Oluştu !!!");
                         }
                     });
             }
             return hatayok;
         }
 
-        function markaSil(id) {
+        function seriSil(id) {
             if (confirm("Silmeyi Onaylıyor Musunuz")) {
                 $.ajax(
                     {
-                        url: "/Admin/MSM/MarkaSil",
+                        url: "/Admin/MSM/SeriSil",
                         method: "Post",
                         data: {
                             id: id
                         }, success: function (data) {
                             if (data == "True") {
-                                alert("Marka Silindi !!!");
-                                markaListele();
+                                alert("Seri Silindi !!!");
+                                seriListele();
                             } else {
-                                alert("Marka Silinemedi !!!");
+                                alert("Seri Silinemedi !!!");
                             }
                         }, error: function (data) {
-                            alert(data);
+                            alert("Bir Hata Oluştu!!!");
                         }
                     });
             } else {
@@ -139,32 +227,50 @@
             }
         }
 
-        var markaId;
-        function markaDuzenleBilgi(id, markaAd) {
-            $("#markaDuzenleAd").val(markaAd);
-            $("#markaDuzenleId").val(id);
-            markaId = id;
-        }
+        var seriId;
+        var selectMarka;
+        function markaGetirDuzenle(id, markaAd, ustKategori) {
+            selectMarka = markaAd;
+            seriId = id;
+            $.ajax({
+                url: "/Admin/MSM/Markalar",
+                method: "Get",
+                success: function (data) {
+                    $("#markaseriduzenle").find("option").remove();
+                    for (var i = 0; i < data.length; i++) {
+                        var id = data[i].ArabaId;
+                        var markaAd = data[i].Ad;
+                        $("#markaseriduzenle").append("<option value='" + id + "'>" + markaAd + "</option>");
+                    }
+                    //$("#markaseriduzenle").find('option[value=""+ +""]').attr('selected', 'selected')
+                    $("#markaseriduzenle").val(ustKategori);
+                    $("#seriDuzenleAd").val(selectMarka);
+                }, error: function () {
+                    console.log("basarisiz");
+                }
+            });
+        }     
 
-        function markaDuzenle() {
+        function seriDuzenle() {
             var hatayok = true;
-            if ($("#markaDuzenleAd").val().trim() == "") {
-                $("#lblMarkaDuzenleBos").show();
+            if ($("#seriDuzenleAd").val().trim() == "") {
+                $("#lblSeriDuzenleBos").show();
                 hatayok = false;
             } else {
                 $.ajax(
                     {
-                        url: "/Admin/MSM/MarkaGuncelle",
+                        url: "/Admin/MSM/SeriGuncelle",
                         method: "Post",
                         data: {
-                            ArabaId: markaId,
-                            Ad: $("#markaDuzenleAd").val()
+                            ArabaId: seriId,
+                            Ad: $("#seriDuzenleAd").val(),
+                            UstKategori: $("#markaseriduzenle").val()
                         }, success: function (data) {
                             if (data == "True") {
-                                $("#lblMarkaDuzenleBos").hide();
-                                alert("Marka Güncellendi !!!");
+                                $("#lblSeriDuzenleBos").hide();
+                                alert("Seri Güncellendi !!!");
                             } else {
-                                alert("Marka Güncellemede Hata !!!");
+                                alert("Seri Güncellemede Hata !!!");
                             }
                         }, error: function (data) {
                             alert(data);
@@ -173,7 +279,6 @@
             }
             return hatayok;
         }
-
     </script>
 }
 
