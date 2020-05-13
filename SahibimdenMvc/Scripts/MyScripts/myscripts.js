@@ -120,7 +120,7 @@ function seriListele() {
             $("#icerik").find("table").remove();
             var txt = "";
             txt += "<table id='marka' class='table table-striped'>";
-            txt += "<tr><th> Model Adı </th>";
+            txt += "<tr><th> Seri Adı </th>";
             txt += "<th> İşlemler </th></tr>";
             for (var i = 0; i < data.length; i++) {
                 var id = data[i].ArabaId;
@@ -265,3 +265,4 @@ function seriDuzenle() {
     }
     return hatayok;
 }
+
