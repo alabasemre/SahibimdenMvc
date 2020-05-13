@@ -4,7 +4,7 @@
     ViewBag.Title = "Duyurular || Sahibimden";
 }
 
-<table class="table table-bordered">
+<table class="table table-bordered" style="overflow:hidden;text-overflow:ellipsis;table-layout:fixed">
     <thead>
         <tr>
             <th>Tarih</th>
@@ -17,7 +17,7 @@
         {
             <tr>
                 <td>@item.Tarih</td>
-                <td>@Html.Raw(item.Mesaj)</td>
+                <td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">@Html.Raw(item.Mesaj)</td>
                 <td><a href='#duyuruGoruntule' data-toggle='modal' class="btn btn-sm btn-primary" onclick="duyuruGoruntule(@item.DuyuruId)">İncele</a></td>
             </tr>
         }
