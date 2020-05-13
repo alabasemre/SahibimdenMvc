@@ -1,0 +1,63 @@
+﻿@using SahibimdenMvc.Models
+@model IEnumerable<Duyuru>
+@{
+    ViewBag.Title = "Duyurular || Sahibimden";
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tarih</th>
+            <th>Duyuru</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Tarih</td>
+                <td>@Html.Raw(item.Mesaj)</td>
+                <td><a href='#duyuruGoruntule' data-toggle='modal' class="btn btn-sm btn-primary" onclick="duyuruGoruntule(@item.DuyuruId)">İncele</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="duyuruGoruntule" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Duyuru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="pagination">
+                <div class="modal-body" id="duyuruIcerik">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function duyuruGoruntule(id) {
+
+            $.ajax({
+                url: "Duyuru/DuyuruGoruntule",
+                method: "Post",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $("#duyuruIcerik").find("p").remove();
+                    var txt = "<p style='word-wrap:break-word;max-width:500px'>" + data + "</p>"
+                    $("#duyuruIcerik").append(txt);
+                }
+            })
+
+     }</script>
+}
