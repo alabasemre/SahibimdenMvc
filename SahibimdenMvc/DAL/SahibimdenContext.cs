@@ -23,9 +23,14 @@ namespace SahibimdenMvc.DAL
             modelBuilder.Entity<Kategori>().ToTable("tblKategoriler");
             modelBuilder.Entity<Kategori>().Property(k => k.Ad).HasColumnType("varchar").HasMaxLength(50).IsRequired();
             modelBuilder.Entity<Kategori>().Property(k => k.UstKategori).HasColumnType("int").IsRequired();
+
+            modelBuilder.Entity<Duyuru>().ToTable("tblDuyurular");
+            modelBuilder.Entity<Duyuru>().Property(d => d.Mesaj).HasColumnType("varchar").HasMaxLength(500).IsRequired();
+            modelBuilder.Entity<Duyuru>().Property(d => d.Tarih).HasColumnType("varchar");
         }
 
         public DbSet<Araba> Arabalar { get; set; }
         public DbSet<Kategori> Kategoriler { get; set; }
+        public DbSet<Duyuru> Duyurular { get; set; }
     }
 }
