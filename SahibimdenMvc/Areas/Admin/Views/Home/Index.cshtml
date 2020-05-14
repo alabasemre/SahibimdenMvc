@@ -193,6 +193,7 @@
                 <div class="form-group">
                     @Html.TextAreaFor(d => d.Duyuru.Mesaj, new { @id = "editor1" })
                     @Html.ValidationMessageFor(d => d.Duyuru.Mesaj)
+
                     <label id="lblDuyuruBos" style="display:none;color:red">Duyuru Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnDuyuruEkle" value="Duyuruyu Yayınla" class="btn btn-success" onclick="duyuruEkle()" />

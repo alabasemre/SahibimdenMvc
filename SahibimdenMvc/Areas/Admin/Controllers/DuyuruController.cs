@@ -20,13 +20,16 @@ namespace SahibimdenMvc.Areas.Admin.Controllers
             using (SahibimdenContext ctx = new SahibimdenContext())
             {
                 bool basarili = false;
-                Duyuru duyuru = new Duyuru();
-                duyuru.Mesaj = message;
-                duyuru.Tarih = DateTime.Now.ToString();
-                ctx.Duyurular.Add(duyuru);
-                if (ctx.SaveChanges() > 0)
+                if (ModelState.IsValid)
                 {
-                    basarili = true;
+                    Duyuru duyuru = new Duyuru();
+                    duyuru.Mesaj = message;
+                    duyuru.Tarih = DateTime.Now.ToString();
+                    ctx.Duyurular.Add(duyuru);
+                    if (ctx.SaveChanges() > 0)
+                    {
+                        basarili = true;
+                    }
                 }
 
                 return basarili;
