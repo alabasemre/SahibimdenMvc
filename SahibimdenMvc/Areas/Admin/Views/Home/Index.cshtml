@@ -23,6 +23,7 @@
                 <div class="form-group">
                     @Html.Label("Marka")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "markaEkleAd" })
+                    @Html.ValidationMessageFor(a => a.Araba.Ad)
                     <label id="lblMarkaBos" style="display:none;color:red">Marka Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnMarkaEkle" value="Ekle" class="btn btn-success" onclick="return markaEkle()" />
@@ -44,6 +45,7 @@
                 <div class="form-group">
                     @Html.Label("Marka")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "markaDuzenleAd" })
+                    @Html.ValidationMessageFor(a => a.Araba.Ad)
                     <label id="lblMarkaDuzenleBos" style="display:none;color:red">Marka Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnMarkaDuzenle" value="Düzenle" class="btn btn-success" onclick="return markaDuzenle()" />
@@ -71,6 +73,7 @@
                 <div class="form-group">
                     @Html.Label("Seri")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "seriEkleAd" })
+                    @Html.ValidationMessageFor(a => a.Araba.Ad)
                     <label id="lblSeriEkleBos" style="display:none;color:red">Seri Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnSeriEkle" value="Seri Ekle" class="btn btn-success" onclick="seriEkle()" />
@@ -98,6 +101,7 @@
                 <div class="form-group">
                     @Html.Label("Seri")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "seriDuzenleAd" })
+                    @Html.ValidationMessageFor(a => a.Araba.Ad)
                     <label id="lblSeriDuzenleBos" style="display:none;color:red">Seri Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnSeriDuzenle" value="Seriyi Güncelle" class="btn btn-success" onclick="seriDuzenle()" />
@@ -132,6 +136,7 @@
                 <div class="form-group">
                     @Html.Label("Seri")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "modelEkleAd" })
+                    @Html.ValidationMessageFor(a => a.Araba.Ad)
                     <label id="lblModelEkleBos" style="display:none;color:red">Model Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnModelEkle" value="Model Ekle" class="btn btn-success" onclick="modelEkle()" />
@@ -166,6 +171,7 @@
                 <div class="form-group">
                     @Html.Label("Seri")
                     @Html.TextBoxFor(a => a.Araba.Ad, new { @class = "form-control", @id = "modelDuzenleAd" })
+                    @Html.ValidationMessageFor(a => a.Araba.Ad)
                     <label id="lblModelDuzenleBos" style="display:none;color:red">Model Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnModelDuzenle" value="Modeli Güncelle" class="btn btn-success" onclick="modelDuzenle()" />
@@ -186,6 +192,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     @Html.TextAreaFor(d => d.Duyuru.Mesaj, new { @id = "editor1" })
+                    @Html.ValidationMessageFor(d => d.Duyuru.Mesaj)
                     <label id="lblDuyuruBos" style="display:none;color:red">Duyuru Alanı Boş Geçilemez</label>
                 </div>
                 <input type="submit" name="btnDuyuruEkle" value="Duyuruyu Yayınla" class="btn btn-success" onclick="duyuruEkle()" />
