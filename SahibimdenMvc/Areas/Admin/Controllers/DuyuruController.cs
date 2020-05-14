@@ -41,7 +41,7 @@ namespace SahibimdenMvc.Areas.Admin.Controllers
             using (ctx = new SahibimdenContext())
             {
                 List<Duyuru> duyurular = new List<Duyuru>();
-                duyurular = ctx.Duyurular.ToList();
+                duyurular = ctx.Duyurular.OrderByDescending(d => d.DuyuruId).ToList();
 
                 return Json(duyurular, JsonRequestBehavior.AllowGet);
             }
